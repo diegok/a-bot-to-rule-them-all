@@ -37,13 +37,30 @@
 	</section>
 
 	<section>
-	  <h2>Soysuper "deploy" bot</h2>
-	  <br><br>
-	  <h4>Diego Kuperman | @freekey</h4>
+	  <h1>Hola!</h1>
 	</section>
 
 	<section>
-	  <h1>Hola!</h1>
+	  <h1>I ❤ perl!</h1>
+	</section>
+	<section>
+	  <h1>I ❤ perl comunity!</h1>
+	  <h3>(you)</h3>
+	</section>
+	<section>
+	  <h1>I've been here long enough...</h1>
+	</section>
+	<section>
+	  <h1>... to love IRC</h1>
+	  <h3>And it's bot's!</h3>
+	</section>
+
+	<section>
+	  <h1>CLI for chat shell</h1>
+	</section>
+
+	<section>
+	  <h1>...</h1>
 	</section>
 
 	<section>
@@ -51,88 +68,48 @@
 	</section>
 	<section>
 	  <img src="img/soysuper_logo.png" alt="" class="plain">
-	</section>
-	<section>
-	  <h1>A supermarket to rule them all ;-)</h1>
-	</section>
-	<section>
-	  <h2>We decided to automate as much as we can!</h2>
+	  <p>A supermarket to rule them all ;-)</p>
 	</section>
 
 	<section>
-	  <h1>How do we deploy our vms?</h1>
-      <h2>OpenVZ / LXC</h2>
-	</section>
-	<section>
-	  <h1>Ansible</h1>
-	  <h2>It was Puppet back then</h2>
+    <h1>Tiny team</h1>
+	  <h3>Lots of pieces...</h3>
 	</section>
 
 	<section>
-	  <h1>How do we deploy our apps?</h1>
-	</section>
-	<section>
-	  <h2>We tried with Puppet back then...</h2>
-	</section>
-	<section>
-	  <h1>Rex + perlbrew + systemd + bash</h1>
+	  <h1>REST-API Thumbs-App Admin-App MogileFS MySQL Resque Workers MongoDB Redis ElasticSearch ...</h1>
 	</section>
 
 	<section>
-	  <h1>How do we deploy our workers?</h1>
+	  <h1>Automate</h1>
+    <h3>as much as we can!</h3>
 	</section>
+
 	<section>
-	  <h1>Git + mrsh + perl + ubic</h1>
+	  <h1>Puppet Ansible Rex Bash MrSh OpenVZ LXC PerlBrew Ubic Perl Git</h1>
 	</section>
 
 	<section>
 	  <h1>Everything was "automated"</h1>
-	  <h2>Yeah!, sure...</h2>
 	</section>
 
 	<section>
-      <h2>Deploy our web app</h2>
+	  <h1>Yeah!, sure...</h1>
+	</section>
+
+	<section>
+	  <h1>Lots of CLI's</h1>
+	  <h2>And CLI's deps</h2>
+	</section>
+
+	<section>
+      <h2>Deploy one app on some ENV</h2>
       <pre><code>
 $ cd /var/supers-puppet/rex/supers_deploy
 $ rex -E production -b supers_checkout master
 $ rex -E production -G web -b supers_install master
       </code></pre>
 	</section>
-	<section>
-      <h2>Deploy our web app</h2>
-      <pre><code data-noescape>
-$ cd /var/supers-puppet/rex/supers_deploy
-$ rex -E production <mark>-b supers_checkout master</mark>
-$ rex -E production -G web -b supers_install master
-      </code></pre>
-	</section>
-	<section>
-      <h2>Deploy our web app</h2>
-      <pre><code data-noescape>
-$ cd /var/supers-puppet/rex/supers_deploy
-$ rex -E production -b supers_checkout master
-$ rex -E production <mark>-G web -b supers_install master</mark>
-      </code></pre>
-	</section>
-
-	<section>
-      <h2>Deploy our admin app</h2>
-      <pre><code data-noescape>
-$ cd /var/supers-puppet/rex/supers_deploy
-$ rex -E production -b supers_checkout some-branch
-$ rex -E production <mark>-G manager -b manager_install some-branch</mark>
-      </code></pre>
-	</section>
-
-	<section>
-      <h2>Deploy our insights app</h2>
-      <pre><code data-noescape>
-$ cd /var/supers-puppet/rex/supers_deploy
-$ rex -E production -b supers_checkout some-branch
-$ rex -E production <mark>-G insights -b insights_install some-other-branch</mark>
-      </code></pre>
-	</section>
-
 	<section>
       <h2>Deploy workers to some boxes</h2>
       <pre><code>
@@ -150,23 +127,12 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
-	  <h1>How do we handle this?</h1>
-	</section>
-
-	<section>
 	  <h1>How do we automate the automation?</h1>
 	</section>
 
 	<section>
 	  <h1>We need a bot</h1>
-	</section>
-
-	<section>
-      <h1>Our bot!</h1>
-	</section>
-
-	<section>
-      <h1>Bender</h1>
+	  <h3>A CLI to rule them all!</h3>
 	</section>
 
 	<section>
@@ -174,15 +140,21 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
-      <h1>It needs to be always online</h1>
+      <h1>Always online</h1>
 	</section>
 
 	<section>
-      <h1>It needs to run our deploy tasks</h1>
+    <h1>It needs to run our</h1>
+    <h1>deploy tasks</h1>
+	</section>
+	<section>
+    <h1>It can run our</h1>
+    <h1>ops tasks</h1>
 	</section>
 
 	<section>
-      <h1>It would be nice if it can monitor things</h1>
+      <h1>It can monitor things</h1>
+      <h1>... and alert Us!</h1>
 	</section>
 
 	<section>
@@ -194,16 +166,22 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
-	  <pre><code>dzil new Supers::Bot</code></pre>
+      <h2>Bot::Pluggable</h2>
+      <h2>Bot::BasicBot::Pluggable</h2>
+      <h2>Bot::Backbone::Bot</h2>
+      <h2>...</h2>
 	</section>
 
 	<section>
-      <h2>We decided to use gTalk/jabber</h2>
+      <h2>gTalk/jabber</h2>
       <h2>push notifications for free!</h2>
 	</section>
 
 	<section>
-	  <h2>XMPP setup</h2>
+	  <pre><code>dzil new Supers::Bot</code></pre>
+	</section>
+
+	<section>
 	  <pre><code data-trim data-noescape class="perl">
 package Supers::Bot;
 # ABSTRACT: Soysuper jabber bot
@@ -224,46 +202,13 @@ has _xmpp => ( is => 'rw', lazy => 1, builder => '_build_xmpp', clearer => 'rese
 
 sub _build_xmpp {
     my $self = shift;
-    AnyEvent::XMPP::IM::Connection->new(
+    <mark>AnyEvent::XMPP::IM::Connection</mark>->new(
         jid              => $self->user,
         password         => $self->password,
         domain           => 'gmail.com',
         host             => 'talk.google.com',
         port             => 5223,
         old_style_ssl    => 1,
-    );
-}
-	  </code></pre>
-	</section>
-	<section data-transition="none">
-	  <h2>XMPP setup</h2>
-	  <pre><code data-trim data-noescape class="perl">
-package Supers::Bot;
-# ABSTRACT: Soysuper jabber bot
-use Moose;
-use AnyEvent;
-use AnyEvent::XMPP::IM::Connection;
-use AnyEvent::XMPP::IM::Message;
-require UNIVERSAL::require;
-
-has user     => ( is => 'ro', required => 1 );
-has password => ( is => 'ro', required => 1 );
-has is_ready => ( is => 'rw', isa => 'Bool', default => sub{0} );
-
-has plugins  => ( is => 'rw', isa => 'ArrayRef', default => sub{[]} );
-has _plugin  => ( is => 'rw', isa => 'HashRef',  default => sub{{}} );
-has _cv   => ( is => 'ro', default => sub {AnyEvent->condvar} );
-has _xmpp => ( is => 'rw', lazy => 1, builder => '_build_xmpp', clearer => 'reset_connection' );
-
-sub _build_xmpp {
-    my $self = shift;
-    AnyEvent::XMPP::IM::Connection->new(
-        jid              => $self->user,
-        password         => $self->password,
-        domain           => 'gmail.com',
-        host             => 'talk.google.com',
-        port             => 5223,
-        <mark>old_style_ssl    => 1,</mark>
     );
 }
 	  </code></pre>
@@ -323,11 +268,11 @@ sub _init_events {
 
 	<section>
 	  <h3>More events...</h3>
-	  <pre><code data-trim class="perl">
+	  <pre><code data-trim data-noescape class="perl">
 has _tick => ( is => 'ro', default => sub {
     my $self = shift;
     AnyEvent->timer ( after => 1, interval => 1,
-        cb => sub { $self->trigger('tick') if $self->is_ready },
+        <mark>cb => sub { $self->trigger('tick') if $self->is_ready }</mark>
     );
 });
 
@@ -375,7 +320,7 @@ sub register_plugin {
 	</section>
 
 	<section>
-	  <h3>Plugins dispatcher</h3>
+	  <h3>Plugins event dispatcher</h3>
 	  <pre><code data-trim class="perl">
 sub trigger {
     my ( $self, $event ) = ( shift, shift );
@@ -389,11 +334,6 @@ sub trigger {
 
 	<section>
 	  <img src="img/bender-inside.png" alt="" class="plain">
-	</section>
-
-	<section>
-      <h1>Now we have a bot class</h1>
-	  <h1>that does nothing</h1>
 	</section>
 
 	<section>
@@ -415,16 +355,14 @@ Supers::Bot->new(
 	</section>
 
 	<section>
-      <h1>Our first plugin</h1>
-	  <h1>And a plugin role...</h1>
+	    <h1>Plugins &amp; plugin role</h1>
 	</section>
 
 	<section>
-	  <pre><code data-trim class="perl">
+	  <pre><code data-trim data-noescape class="perl">
 package Supers::Bot::Plugin::HelloWorld;
-use Moose;
-with 'Supers::Bot::Plugin';
-use v5.10;
+use common::sense;
+use Moose; with 'Supers::Bot::Plugin';
 
 sub ready {
     say "Ready to run!";
@@ -435,39 +373,16 @@ sub ready {
 
 sub tick {
     my $self = shift;
-    say 'tick tick tick!';
+    say 'Should I check something on this tick?';
 }
 
 sub message {
     my ( $self, $msg ) = @_;
-    say '---';
-    say $msg->from;
-    say $msg->body;
+    say sprintf('Message from %s: %s', $msg->from, $msg->body);
+    # Now do something with that!
 }
 
 __PACKAGE__->meta->make_immutable;
-	  </code></pre>
-	</section>
-
-	<section>
-	  <h3>Plugin role</h3>
-	  <pre><code data-trim class="perl">
-package Supers::Bot::Plugin;
-use Moose::Role;
-use AnyEvent::Util;
-
-# ABSTRACT: Role to implement plugins for the Supers::Bot
-
-has bot => (
-    is       => 'ro',
-    isa      => 'Supers::Bot',
-    handles  => [qw/ send_message peers /],
-    required => 1
-);
-
-# ...
-
-1;
 	  </code></pre>
 	</section>
 
@@ -495,17 +410,16 @@ Supers::Bot->new(
 	</section>
 
 	<section>
-      <h1>Deploy apps with Rex</h1>
+      <h1>Deploy things</h1>
+      <h2>Parse message and shell out ...</h2>
 	</section>
 
 	<section>
 	  <pre><code data-trim class="perl">
-package Supers::Bot::Plugin::DeployApp;
-use utf8;
+package Supers::Bot::Plugin::DeployApps;
 use Moose;
 with 'Supers::Bot::Plugin';
 with 'Supers::Bot::Role::Runner';
-with 'Supers::Bot::Role::Peers';
 
 has task_running =>
     is        => 'rw',
@@ -514,88 +428,28 @@ has task_running =>
 
 has last_msg    => is => 'rw';
 
-# Lots of apps attributes for Rex (removed for brevity)
+# Environments config for commands
 has _envs => is => 'ro', default => sub{+{ ... }};
 	  </code></pre>
 	</section>
 
 	<section>
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
 	  <pre><code data-trim class="perl">
 sub message {
     my ( $self, $msg ) = @_;
 
     if ( $msg->body =~ /^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$/x ) {
-        my ($app, $branch, $env, $dry) = ($1, $2||'', $3||'pro', $4);
+        my ($app, $branch, $env, $dry) = ($1, $2||'master', $3||'pro', $4);
 
-        return $self->send_message(
-            $msg => sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->who($self->last_msg) )
+        return $msg->reply(
+            sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
         ) if $self->is_running;
 
-        $self->_deploy_rex( $msg, $app, $branch, $env, $dry )
-    }
-    elsif ( $self->last_msg &amp;&amp; $msg->body =~ /^deploy \s+ (?:std)? (out|err) \s* $/ix ) {
-        my $attr = "last_std$1";
-        $self->send_message( $msg => $self->$attr() );
-    }
-    elsif ( $self->last_msg &amp;&amp; $msg->body =~ /^deploy \s+ who \s* \? \s* $/ix ) {
-        $self->send_message( $msg => $self->who($self->last_msg) );
+        $self->_deploy_app( $msg, $app, $branch, $env, $dry )
     }
     elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
-        $self->_help_reply($msg);
-    }
-}
-	  </code></pre>
-	</section>
-	<section>
-	  <pre><code data-trim data-noescape class="perl">
-sub message {
-    my ( $self, $msg ) = @_;
-
-    <mark>if ( $msg->body =~ /^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$/x ) {</mark>
-        my ($app, $branch, $env, $dry) = ($1, $2||'', $3||'pro', $4);
-
-        return $self->send_message(
-            $msg => sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->who($self->last_msg) )
-        ) if $self->is_running;
-
-        $self->_deploy_rex( $msg, $app, $branch, $env, $dry )
-    }
-    elsif ( $self->last_msg &amp;&amp; $msg->body =~ /^deploy \s+ (?:std)? (out|err) \s* $/ix ) {
-        my $attr = "last_std$1";
-        $self->send_message( $msg => $self->$attr() );
-    }
-    elsif ( $self->last_msg &amp;&amp; $msg->body =~ /^deploy \s+ who \s* \? \s* $/ix ) {
-        $self->send_message( $msg => $self->who($self->last_msg) );
-    }
-    elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
-        $self->_help_reply($msg);
-    }
-}
-	  </code></pre>
-	</section>
-	<section>
-	  <pre><code data-trim data-noescape class="perl">
-sub message {
-    my ( $self, $msg ) = @_;
-
-    if ( $msg->body =~ /^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$/x ) {
-        my ($app, $branch, $env, $dry) = ($1, $2||'', $3||'pro', $4);
-
-        return $self->send_message(
-            $msg => sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->who($self->last_msg) )
-        ) if $self->is_running;
-
-        <mark>$self->_deploy_rex( $msg, $app, $branch, $env, $dry )</mark>
-    }
-    elsif ( $self->last_msg &amp;&amp; $msg->body =~ /^deploy \s+ (?:std)? (out|err) \s* $/ix ) {
-        my $attr = "last_std$1";
-        $self->send_message( $msg => $self->$attr() );
-    }
-    elsif ( $self->last_msg &amp;&amp; $msg->body =~ /^deploy \s+ who \s* \? \s* $/ix ) {
-        $self->send_message( $msg => $self->who($self->last_msg) );
-    }
-    elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
-        $self->_help_reply($msg);
+			  # Give some help on this deploy command
     }
 }
 	  </code></pre>
@@ -603,139 +457,23 @@ sub message {
 
 	<section>
 	  <pre><code data-trim class="perl">
-sub _deploy_rex {
+sub _deploy_app {
     my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
 
-    my $conf = (exists $self->_envs->{$app} &amp;&amp; $self->_envs->{$app})
-            || return $self->send_message( $msg => "Unknown application `$app`" );
+    # Whatever we need to build the shell commands to run...
+    my $cmd = _build_cmd( $conf, $env, $branch );
+           || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
 
-    my $env = (exists $conf->{$env_alias} &amp;&amp; $conf->{$env_alias})
-           || return $self->send_message( $msg => "Unknown environment `$env_alias` for application `$app`" );
+    return $msg->reply( "This would run:\n$cmd" ) if $dry;
 
-    my ($group, $task) = exists $conf->{_rex} ? @{$conf->{_rex}} : ( $app, "${app}_install" );
+    $msg->reply("Deploying branch `$branch` for application `$app` on `$env_alias` environment.");
+    $self->last_msg($msg); $self->task_running(1);
 
-    my $cmd_cd       = 'cd /path/to/rex/supers_deploy';
-    my $cmd_checkout = "rex -E $env -b supers_checkout $branch";
-    my $cmd_deploy   = "rex -E $env -G $group -b $task $branch";
-    my $cmd          = join ' &amp;&amp; ', $cmd_cd, $cmd_checkout, $cmd_deploy;
-
-    if ( $dry ) {
-        $self->send_message( $msg => join "\n",
-            "This command will execute the following:", "> $cmd_cd", "> $cmd_checkout", "> $cmd_deploy"
-        );
-    }
-    else {
-        $branch ||= 'master';
-        $self->send_message(
-            $msg => "Deploying branch `$branch` for application `$app` on `$env_alias` environment."
-        );
-        $self->last_msg($msg);
-        $self->task_running(1);
-        $self->run_command($cmd => sub{
-            my ( $self, $out, $err, $exit ) = @_;
-            my $who = $self->who($msg);
-
-            $self->send_message( $msg => "Done!" );
-
-            $self->bot->trigger(
-                notify => ":successful: $app [:branch: $branch] was deployed to $env_alias by :$who:", 'success'
-            );
-
-            $self->task_done;
-        });
-    }
-}
-	  </code></pre>
-	</section>
-	<section>
-	  <pre><code data-trimi data-noescape class="perl">
-sub _deploy_rex {
-    my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
-
-    my $conf = (exists $self->_envs->{$app} &amp;&amp; $self->_envs->{$app})
-            || return $self->send_message( $msg => "Unknown application `$app`" );
-
-    my $env = (exists $conf->{$env_alias} &amp;&amp; $conf->{$env_alias})
-           || return $self->send_message( $msg => "Unknown environment `$env_alias` for application `$app`" );
-
-    my ($group, $task) = exists $conf->{_rex} ? @{$conf->{_rex}} : ( $app, "${app}_install" );
-
-    <mark>my $cmd_cd       = 'cd /path/to/rex/supers_deploy';
-    my $cmd_checkout = "rex -E $env -b supers_checkout $branch";
-    my $cmd_deploy   = "rex -E $env -G $group -b $task $branch";
-    my $cmd          = join ' &amp;&amp; ', $cmd_cd, $cmd_checkout, $cmd_deploy;</mark>
-
-    if ( $dry ) {
-        $self->send_message( $msg => join "\n",
-            "This command will execute the following:", "> $cmd_cd", "> $cmd_checkout", "> $cmd_deploy"
-        );
-    }
-    else {
-        $branch ||= 'master';
-        $self->send_message(
-            $msg => "Deploying branch `$branch` for application `$app` on `$env_alias` environment."
-        );
-        $self->last_msg($msg);
-        $self->task_running(1);
-        $self->run_command($cmd => sub{
-            my ( $self, $out, $err, $exit ) = @_;
-            my $who = $self->who($msg);
-
-            $self->send_message( $msg => "Done!" );
-
-            $self->bot->trigger(
-                notify => ":successful: $app [:branch: $branch] was deployed to $env_alias by :$who:", 'success'
-            );
-
-            $self->task_done;
-        });
-    }
-}
-	  </code></pre>
-	</section>
-	<section>
-	  <pre><code data-trimi data-noescape class="perl">
-sub _deploy_rex {
-    my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
-
-    my $conf = (exists $self->_envs->{$app} &amp;&amp; $self->_envs->{$app})
-            || return $self->send_message( $msg => "Unknown application `$app`" );
-
-    my $env = (exists $conf->{$env_alias} &amp;&amp; $conf->{$env_alias})
-           || return $self->send_message( $msg => "Unknown environment `$env_alias` for application `$app`" );
-
-    my ($group, $task) = exists $conf->{_rex} ? @{$conf->{_rex}} : ( $app, "${app}_install" );
-
-    my $cmd_cd       = 'cd /path/to/rex/supers_deploy';
-    my $cmd_checkout = "rex -E $env -b supers_checkout $branch";
-    my $cmd_deploy   = "rex -E $env -G $group -b $task $branch";
-    my $cmd          = join ' &amp;&amp; ', $cmd_cd, $cmd_checkout, $cmd_deploy;
-
-    if ( $dry ) {
-        $self->send_message( $msg => join "\n",
-            "This command will execute the following:", "> $cmd_cd", "> $cmd_checkout", "> $cmd_deploy"
-        );
-    }
-    else {
-        $branch ||= 'master';
-        $self->send_message(
-            $msg => "Deploying branch `$branch` for application `$app` on `$env_alias` environment."
-        );
-        $self->last_msg($msg);
-        $self->task_running(1);
-        <mark>$self->run_command($cmd => sub{</mark>
-            my ( $self, $out, $err, $exit ) = @_;
-            my $who = $self->who($msg);
-
-            $self->send_message( $msg => "Done!" );
-
-            <mark>$self->bot->trigger(
-                notify => ":successful: $app [:branch: $branch] was deployed to $env_alias by :$who:", 'success'
-            );</mark>
-
-            $self->task_done;
-        });
-    }
+    $self->run_command($cmd => sub{
+        my ( $self, $out, $err, $exit ) = @_;
+        $msg->reply( "Done deploying `$app` on `$env_alias` environment!" );
+        $self->task_done;
+    });
 }
 	  </code></pre>
 	</section>
@@ -750,14 +488,14 @@ package Supers::Bot::Role::Runner;
 use Moose::Role;
 use AnyEvent::Util;
 
-has last_stdout => is => 'rw';
-has last_stderr => is => 'rw';
-
 =head2 run_command
 Helper to run shell commands async.
 
 Accept a command and optionally a callback to be called with bot,
 stdout, stderr and exit status when the command finish running.
+
+This is a wrapper around AnyEvent::Util::run_cmd, so command can
+be anything accepted by it.
 =cut
 sub run_command {
     my $self = shift;
@@ -771,67 +509,11 @@ sub run_command {
 
    $cv->cb(sub {
       my $exit_status = shift->recv;
-	  $self->last_stdout($stdout);
-	  $self->last_stderr($stderr);
       if ( $cb ) {
         $cb->($self, $stdout, $stderr, $exit_status);
       }
    });
 }
-	  </code></pre>
-	</section>
-
-	<section>
-      <h2>Notifications are handled by another plugin</h2>
-	</section>
-
-	<section>
-	  <pre><code data-trim class="perl">
-package Supers::Bot::Plugin::Slack;
-use Moose;
-with 'Supers::Bot::Plugin';
-use AnyEvent::HTTP;
-use Scalar::Util qw(weaken);
-use JSON qw(encode_json);
-
-has api_url => (
-    is      => 'ro',
-    default => sub{'https://hooks.slack.com/services/our/own/credentials'}
-);
-
-has nick     => ( is => 'ro', default => sub{ 'Bender' } );
-has channel  => ( is => 'ro', default => sub{ '#general' } );
-has guard    => ( is => 'rw' );
-
-sub ready {
-    my ( $self, $channel ) = @_;
-    $self->notify("Bender is ready at $channel! :nyan::ncat:", 'info')
-}
-	  </code></pre>
-	</section>
-
-	<section>
-	  <pre><code data-trim class="perl">
-sub notify {
-    my ( $self, $msg, $level ) = @_;
-    return unless $msg;
-
-    my $payload = encode_json({ username => $self->nick, channel => $self->channel, text => $msg });
-
-    weaken $self;
-    $self->guard(
-        http_post( $self->api_url, "payload=$payload",
-            headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
-            sub {
-                my ($body, $heads) = @_;
-                $self->bot->trigger( inform_op => 'Slack message failed: $msg' )
-                    unless $heads->{Status} == 200;
-            }
-        )
-    );
-}
-
-__PACKAGE__->meta->make_immutable;
 	  </code></pre>
 	</section>
 
@@ -844,7 +526,8 @@ __PACKAGE__->meta->make_immutable;
 	</section>
 
 	<section>
-      <h1>What about monitoring?</h1>
+      <h1>... and basic http</h1>
+      <h1>monitoring and alerting</h1>
 	</section>
 
 	<section>
@@ -852,7 +535,6 @@ __PACKAGE__->meta->make_immutable;
 package Supers::Bot::Plugin::AppsMonitor;
 use Moose;
 with 'Supers::Bot::Plugin';
-use v5.10;
 use AnyEvent::HTTP;
 use Scalar::Util qw(weaken);
 
@@ -917,7 +599,7 @@ __PACKAGE__->meta->make_immutable;
 
 	<section>
       <h2>We happily used it for years</h2>
-      <h3>... and completely forgot how it does things!</h3>
+      <h3>... and added trivial pluggins!</h3>
 	</section>
 
 	<section>
@@ -1008,28 +690,8 @@ __PACKAGE__->meta->make_immutable;
 	</section>
 
 	<section>
-	  <pre><code data-trim data-noescape class="perl">
-sub send_message {
-    my ( $self, $to, $body ) = @_;
-    return unless defined $body;
-    my $to_class = ref($to) || '';
-    if ( !$to_class ) {
-        my $msg = AnyEvent::XMPP::IM::Message->new( to => $to, body => $body, type => 'chat');
-        $msg->send($self->_xmpp);
-    }
-    elsif ( $to_class =~ /XMPP/ ) {
-        my $msg = AnyEvent::XMPP::IM::Message->new( to => $to->from, body => $body, type => 'chat');
-        $msg->send($self->_xmpp);
-    }
-    else { # slack wrapper
-        $to->reply($body);
-    }
-}
-	  </code></pre>
-	</section>
-
-	<section>
-      <h1>We need the bot to know when message is for him now!</h1>
+      <h1>We need to know when addressed!</h1>
+      <h2>a new plugin role was a natural move</h2>
 	</section>
 
 	<section>
@@ -1037,7 +699,7 @@ sub send_message {
 package Supers::Bot::Role::CmdPlugin;
 use Moose::Role;
 with 'Supers::Bot::Plugin';
-# ABSTRACT: Role to implement bot commands/plugins for the Supers::Bot
+# ABSTRACT: Role to implement bot commands/plugins for Supers::Bot
 
 sub message {
     my ( $self, $msg ) = @_;
@@ -1070,6 +732,145 @@ sub _parse_msg {
 }
 1;
 	  </code></pre>
+	</section>
+
+	<section>
+      <h2>We don't want to chat anymore!</h2>
+	</section>
+
+	<section>
+      <h2>CLI all the things!</h2>
+	  <img src="img/bender-woah.png" alt="" class="plain">
+	</section>
+
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+package Supers::Bot;
+# ABSTRACT: Soysuper jabber bot
+use Moose;
+use AnyEvent;
+use AnyEvent::XMPP::IM::Connection;
+use AnyEvent::XMPP::IM::Message;
+use Mojo::SlackRTM;
+<mark>use AnyEvent::HTTPD</mark>
+Supers::Bot::SlackMessage
+<mark>Supers::Bot::HttpMessage</mark>
+require UNIVERSAL::require;
+
+has user     => ( is => 'ro', required => 1 );
+has password => ( is => 'ro', required => 1 );
+has slack_token => ( is => 'ro', required => 1 );
+<mark>has httpd_port  => ( is => 'ro', default => sub {6200} );</mark>
+
+has plugins  => ( is => 'rw', isa => 'ArrayRef', default => sub{[]} );
+has _plugin  => ( is => 'rw', isa => 'HashRef',  default => sub{{}} );
+has _cv    => ( is => 'ro', default => sub {AnyEvent->condvar} );
+has _xmpp  => ( is => 'rw', lazy => 1, builder => '_build_xmpp', clearer => 'reset_connection' );
+has _slack => ( is => 'ro', lazy => 1, default => sub { Mojo::SlackRTM->new(token => shift->slack_token) } );
+<mark>has _httpd => ( is => 'ro', lazy => 1, default => sub { AnyEvent::HTTPD->new(port => shift->httpd_port) } );</mark>
+
+sub BUILD {
+    my $self = shift;
+    $self->_init_plugins;
+    $self->_init_events;
+    $self->_init_slack;
+    <mark>$self->_init_httpd;</mark>
+}
+	  </code></pre>
+	</section>
+
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+sub _init_httpd {
+    my $self = shift;
+
+    $self->_httpd->reg_cb(
+        '/' => sub {
+            shift->stop_request;
+            shift->respond({ content => ['text/plain', "Soysuper Bot"] })
+        },
+        ''  => sub {
+            $self->trigger( message => Supers::Bot::HttpMessage->new(
+                httpd => shift,
+                req   => shift
+            ))
+        }
+    );
+}
+	  </code></pre>
+	</section>
+
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+package Supers::Bot::HttpMessage;
+use Moose;
+has httpd   => is => 'ro', required => 1;
+has req     => is => 'ro', required => 1;
+has body    => is => 'ro', lazy => 1,
+    default => sub { join ' ', grep {$_} split(/\//, shift->req->url->path) };
+has from    => is => 'ro', default => 'api-rest';
+has channel => is => 'ro', default => '';
+has _res    =>
+    is      => 'ro',
+    isa     => 'ArrayRef[Str]',
+    traits  => ['Array'],
+    default => sub {[]},
+    handles => {
+        responses    => 'elements',
+        add_response => 'push',
+        has_response => 'count',
+    };
+
+sub reply { shift->add_response(shift) }
+
+sub DEMOLISH {
+    my ( $self, $is_global ) = @_;
+    return if $is_global;
+    $self->has_response
+      ? $self->req->respond({ content => ['text/plain', join("\n\n", $self->responses)] })
+      : $self->req->respond ([ 404, 'not found', { 'Content-Type' => 'text/plain' }, 'Unknown action' ]);
+}
+
+__PACKAGE__->meta->make_immutable;
+	  </code></pre>
+	</section>
+
+	<section>
+	  <pre><code data-trim>
+$ curl http://bot.ss:6200/deploy/api
+	  </code></pre>
+	</section>
+
+	<section>
+	  <pre><code data-trim>
+$ sc deploy api
+	  </code></pre>
+	</section>
+
+	<section>
+	  <pre><code data-trim>
+$ sc deploy api + deploy workers - deploy app
+	  </code></pre>
+	</section>
+
+	<section>
+	  <img src="img/bender-dance.gif" alt="" class="plain">
+	</section>
+
+	<section data-background="red">
+	  <h1>...</h1>
+	</section>
+
+	<section data-background="red">
+	  <img src="img/bender-applause.png" alt="" class="plain">
+	</section>
+
+	<section data-background="yellow">
+	<h1>Thanks!</h1>
+	</section>
+
+	<section>
+	<h1>Questions?</h1>
 	</section>
 
 	<section>
@@ -1135,138 +936,57 @@ __PACKAGE__->meta->make_immutable;
 	</section>
 
 	<section>
-      <h2>We don't want to chat anymore!</h2>
-      <h3>CLI all the things!</h3>
+      <h2>Notifications are handled by another plugin</h2>
 	</section>
 
 	<section>
-	  <img src="img/bender-woah.png" alt="" class="plain">
-	</section>
-
-	<section>
-	  <pre><code data-trim data-noescape class="perl">
-package Supers::Bot;
-# ABSTRACT: Soysuper jabber bot
+	  <pre><code data-trim class="perl">
+package Supers::Bot::Plugin::Slack;
 use Moose;
-use AnyEvent;
-use AnyEvent::XMPP::IM::Connection;
-use AnyEvent::XMPP::IM::Message;
-use Mojo::SlackRTM;
-<mark>use AnyEvent::HTTPD</mark>
-Supers::Bot::SlackMessage
-<mark>Supers::Bot::HttpMessage</mark>
-require UNIVERSAL::require;
+with 'Supers::Bot::Plugin';
+use AnyEvent::HTTP;
+use Scalar::Util qw(weaken);
+use JSON qw(encode_json);
 
-has user     => ( is => 'ro', required => 1 );
-has password => ( is => 'ro', required => 1 );
-has slack_token => ( is => 'ro', required => 1 );
-<mark>has httpd_port  => ( is => 'ro', default => sub {6200} );</mark>
-
-has plugins  => ( is => 'rw', isa => 'ArrayRef', default => sub{[]} );
-has _plugin  => ( is => 'rw', isa => 'HashRef',  default => sub{{}} );
-has _cv    => ( is => 'ro', default => sub {AnyEvent->condvar} );
-has _xmpp  => ( is => 'rw', lazy => 1, builder => '_build_xmpp', clearer => 'reset_connection' );
-has _slack => ( is => 'ro', lazy => 1, default => sub { Mojo::SlackRTM->new(token => shift->slack_token) } );
-<mark>has _httpd => ( is => 'ro', lazy => 1, default => sub { AnyEvent::HTTPD->new(port => shift->httpd_port) } );</mark>
-
-sub BUILD {
-    my $self = shift;
-    $self->_init_plugins;
-    $self->_init_events;
-    $self->_init_slack;
-    <mark>$self->_init_httpd;</mark>
-}
-	  </code></pre>
-	</section>
-
-	<section>
-	  <pre><code data-trim data-noescape class="perl">
-sub _init_httpd {
-    my $self = shift;
-
-    $self->_httpd->reg_cb(
-        '/' => sub {
-            shift->stop_request;
-            shift->respond({ content => ['text/plain', "Soysuper Bot"] })
-        },
-        ''  => sub {
-            $self->trigger( message => Supers::Bot::HttpMessage->new(
-                httpd => shift,
-                req   => shift
-            ))
-        }
-    );
-}
-	  </code></pre>
-	</section>
-
-	<section>
-	  <pre><code data-trim data-noescape class="perl">
-package Supers::Bot::HttpMessage;
-use Moose;
-# ABSTRACT: Wrapper for HTTPD requests to act as a message with multi response buffering
-has httpd   => is => 'ro', required => 1;
-has req     => is => 'ro', required => 1;
-has body    => is => 'ro', lazy => 1, default => sub { join ' ', grep {$_} split(/\//, shift->req->url->path) };
-has from    => is => 'ro', default => 'api-rest';
-has channel => is => 'ro', default => '';
-
-has _res =>
+has api_url => (
     is      => 'ro',
-    isa     => 'ArrayRef[Str]',
-    traits  => ['Array'],
-    default => sub {[]},
-    handles => {
-        responses    => 'elements',
-        add_response => 'push',
-        has_response => 'count',
-    };
+    default => sub{'https://hooks.slack.com/services/our/own/credentials'}
+);
 
-sub reply {
-    my ( $self, $response ) = @_;
-    $self->add_response($response);
+has nick     => ( is => 'ro', default => sub{ 'Bot' } );
+has channel  => ( is => 'ro', default => sub{ '#general' } );
+has guard    => ( is => 'rw' );
+
+sub ready {
+    my ( $self, $channel ) = @_;
+    $self->notify("Bender is ready at $channel! :nyan::ncat:", 'info')
 }
+	  </code></pre>
+	</section>
 
-sub DEMOLISH {
-    my ( $self, $is_global ) = @_;
-    return if $is_global;
+	<section>
+	  <pre><code data-trim class="perl">
+sub notify {
+    my ( $self, $msg, $level ) = @_;
+    return unless $msg;
 
-    if ( $self->has_response ) {
-        $self->req->respond({ content => [ 'text/plain', join("\n\n", $self->responses) ] })
-    }
-    else {
-        $self->req->respond ([ 404, 'not found', { 'Content-Type' => 'text/plain' }, 'Unknown action' ]);
-    }
+    my $payload = encode_json({ username => $self->nick, channel => $self->channel, text => $msg });
+
+    weaken $self;
+    $self->guard(
+        http_post( $self->api_url, "payload=$payload",
+            headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
+            sub {
+                my ($body, $heads) = @_;
+                $self->bot->trigger( inform_op => 'Slack message failed: $msg' )
+                    unless $heads->{Status} == 200;
+            }
+        )
+    );
 }
 
 __PACKAGE__->meta->make_immutable;
 	  </code></pre>
-	</section>
-
-	<section>
-	  <pre><code data-trim>
-$ curl http://bot.ss:6200/deploy/api
-	  </code></pre>
-	</section>
-
-	<section>
-	  <img src="img/bender-dance.gif" alt="" class="plain">
-	</section>
-
-	<section data-background="red">
-	  <h1>...</h1>
-	</section>
-
-	<section data-background="red">
-	  <img src="img/bender-applause.png" alt="" class="plain">
-	</section>
-
-	<section data-background="red">
-	<h1>Thanks!</h1>
-	</section>
-
-	<section>
-	<h1>Questions?</h1>
 	</section>
 
       </div>
