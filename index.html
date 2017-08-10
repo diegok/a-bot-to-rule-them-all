@@ -31,13 +31,13 @@
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
 	<section>
-	  <h2>A bot to rule them all!</h2>
+	  <h1>A bot to rule them all!</h1>
 	  <br><br>
-	  <h4>Diego Kuperman | @freekey</h4>
+	  <h3>Diego Kuperman | @freekey</h3>
 	</section>
 
 	<section>
-	  <h1>Hola!</h1>
+	  <h1>Hola</h1>
 	</section>
 
 	<section>
@@ -166,15 +166,15 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
+      <h2>gTalk/jabber</h2>
+      <h2>push notifications for free!</h2>
+	</section>
+
+	<section>
       <h2>Bot::Pluggable</h2>
       <h2>Bot::BasicBot::Pluggable</h2>
       <h2>Bot::Backbone::Bot</h2>
       <h2>...</h2>
-	</section>
-
-	<section>
-      <h2>gTalk/jabber</h2>
-      <h2>push notifications for free!</h2>
 	</section>
 
 	<section>
@@ -198,8 +198,12 @@ has is_ready => ( is => 'rw', isa => 'Bool', default => sub{0} );
 has plugins  => ( is => 'rw', isa => 'ArrayRef', default => sub{[]} );
 has _plugin  => ( is => 'rw', isa => 'HashRef',  default => sub{{}} );
 has _cv   => ( is => 'ro', default => sub {AnyEvent->condvar} );
-has _xmpp => ( is => 'rw', lazy => 1, builder => '_build_xmpp', clearer => 'reset_connection' );
+has _xmpp => ( is => 'rw', lazy => 1, <mark>builder => '_build_xmpp'</mark>, clearer => 'reset_connection' );
+	  </code></pre>
+	</section>
 
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
 sub _build_xmpp {
     my $self = shift;
     <mark>AnyEvent::XMPP::IM::Connection</mark>->new(
@@ -229,15 +233,55 @@ sub run {
     $self->_cv->recv;
 }
 
-sub connect {
+sub connect { shift->_xmpp->connect }
+	  </code></pre>
+	</section>
+
+	<section>
+	  <h3>Plugins</h3>
+	  <pre><code data-trim class="perl">
+sub _init_plugins {
     my $self = shift;
-    $self->_xmpp->connect;
+    my $plugins = $self->plugins;
+    $self->plugins([]);
+    $self->register_plugin($_) for @{$plugins};
+}
+
+sub register_plugin {
+    my ( $self, $name ) = @_;
+    die 'Need plugin name to load!' unless $name;
+
+    $name = "Supers::Bot::Plugin::$name" unless $name =~ /::/;
+    if ( $name->use ) {
+        my $plugin = eval { $name->new( bot => $self ) };
+        if ($@) {
+            warn "Failed to initialize plugin '$name': $@";
+            return;
+        }
+        push @{$self->plugins}, $name;
+        $self->_plugin->{$name} = $plugin;
+        return $plugin;
+    }
+    else { warn "Plugin '$name' not loaded: $@" }
 }
 	  </code></pre>
 	</section>
 
 	<section>
-	  <h3>Events</h3>
+	  <h3>Plugins event dispatcher</h3>
+	  <pre><code data-trim class="perl">
+sub trigger {
+    my ( $self, $event ) = ( shift, shift );
+    for my $plugin_name ( @{$self->plugins} ) {
+        my $plugin = $self->_plugin->{$plugin_name} || next;
+        $plugin->$event(@_) if $plugin->can($event);
+    }
+}
+	  </code></pre>
+	</section>
+
+	<section>
+	  <h3>XMPP events</h3>
 	  <pre><code data-trim class="perl">
 sub _init_events {
     my $self = shift;
@@ -290,54 +334,7 @@ has _sig_int => ( is => 'ro', default => sub {
 	</section>
 
 	<section>
-	  <h3>Plugins</h3>
-	  <pre><code data-trim class="perl">
-sub _init_plugins {
-    my $self = shift;
-    my $plugins = $self->plugins;
-    $self->plugins([]);
-    $self->register_plugin($_) for @{$plugins};
-}
-
-sub register_plugin {
-    my ( $self, $name ) = @_;
-    die 'Need plugin name to load!' unless $name;
-
-    $name = "Supers::Bot::Plugin::$name" unless $name =~ /::/;
-    if ( $name->use ) {
-        my $plugin = eval { $name->new( bot => $self ) };
-        if ($@) {
-            warn "Failed to initialize plugin '$name': $@";
-            return;
-        }
-        push @{$self->plugins}, $name;
-        $self->_plugin->{$name} = $plugin;
-        return $plugin;
-    }
-    else { warn "Plugin '$name' not loaded: $@" }
-}
-	  </code></pre>
-	</section>
-
-	<section>
-	  <h3>Plugins event dispatcher</h3>
-	  <pre><code data-trim class="perl">
-sub trigger {
-    my ( $self, $event ) = ( shift, shift );
-    for my $plugin_name ( @{$self->plugins} ) {
-        my $plugin = $self->_plugin->{$plugin_name} || next;
-        $plugin->$event(@_) if $plugin->can($event);
-    }
-}
-	  </code></pre>
-	</section>
-
-	<section>
-	  <img src="img/bender-inside.png" alt="" class="plain">
-	</section>
-
-	<section>
-	  <h3>A plugin-less bender</h3>
+	  <h3>A plugin-less bot</h3>
 	  <pre><code data-trim class="perl">
 #!/usr/bin/env perl
 use Supers::Bot;
@@ -348,9 +345,6 @@ Supers::Bot->new(
     plugins  => [] # meh!
 )->run;
 	  </code></pre>
-	</section>
-
-	<section>
 	  <img src="img/bender-resting.gif" alt="" class="plain">
 	</section>
 
@@ -387,7 +381,6 @@ __PACKAGE__->meta->make_immutable;
 	</section>
 
 	<section>
-	  <h3>A baby bender</h3>
 	  <pre><code data-trim class="perl">
 #!/usr/bin/env perl
 use Supers::Bot;
@@ -398,20 +391,21 @@ Supers::Bot->new(
     plugins  => [qw/ HelloWorld /]
 )->run;
 	  </code></pre>
-	</section>
-
-	<section>
 	  <img src="img/bender-baby.png" alt="" class="plain">
 	</section>
 
 	<section>
       <h1>Time to grow up!</h1>
-      <h2>And solve real problems...</h2>
+      <h2>Solve real problems</h2>
 	</section>
 
 	<section>
       <h1>Deploy things</h1>
-      <h2>Parse message and shell out ...</h2>
+      <h2>Parse message and shell out</h2>
+	</section>
+
+	<section>
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
 	</section>
 
 	<section>
@@ -426,7 +420,7 @@ has task_running =>
     clearer   => 'task_done',
     predicate => 'is_running';
 
-has last_msg    => is => 'rw';
+has last_msg => is => 'rw';
 
 # Environments config for commands
 has _envs => is => 'ro', default => sub{+{ ... }};
@@ -435,11 +429,13 @@ has _envs => is => 'ro', default => sub{+{ ... }};
 
 	<section>
 		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
-	  <pre><code data-trim class="perl">
+	  <pre><code data-trim data-noescape class="perl">
 sub message {
     my ( $self, $msg ) = @_;
 
-    if ( $msg->body =~ /^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$/x ) {
+    if ( $msg->body =~ /
+      ^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$
+    /x ) {
         my ($app, $branch, $env, $dry) = ($1, $2||'master', $3||'pro', $4);
 
         return $msg->reply(
@@ -479,11 +475,12 @@ sub _deploy_app {
 	</section>
 
 	<section>
-      <h2>run_command() is provided by Runner role</h2>
+    <h1>run_command()</h1>
+    <h2>is provided by Runner role</h2>
 	</section>
 
 	<section>
-	  <pre><code data-trim class="perl">
+	  <pre style="margin-top:-30px;"><code data-trim data-noescape class="perl">
 package Supers::Bot::Role::Runner;
 use Moose::Role;
 use AnyEvent::Util;
@@ -526,8 +523,8 @@ sub run_command {
 	</section>
 
 	<section>
-      <h1>... and basic http</h1>
-      <h1>monitoring and alerting</h1>
+      <h1>HTTP</h1>
+      <h1>monitoring &amp; alerting</h1>
 	</section>
 
 	<section>
@@ -540,7 +537,7 @@ use Scalar::Util qw(weaken);
 
 has operator =>
     is      => 'rw',
-    default => sub{['diego@soysuper.com', 'other@soysuper.com']};
+    default => sub{[ map {$_.'@soysuper.com'} qw/diego unlucky/ ]};
 
 has urls =>
     is  => 'rw',
@@ -551,8 +548,8 @@ has urls =>
 		# ...
     ]};
 
-has guard => ( is => 'rw', default => sub{{}} );
-has last  => ( is => 'rw', default => sub{time} );
+has guard     => ( is => 'rw', default => sub{{}} );
+has last_time => ( is => 'rw', default => sub{time} );
 
 sub inform_op {
     my ( $self, $msg ) = @_;
@@ -567,7 +564,7 @@ sub tick {
     my $self = shift;
     my $now = time;
     return unless $now - $self->last > 20;
-    $self->last($now);
+    $self->last_time($now);
 
     if ( my $url = shift @{$self->urls} ) {
         weaken $self;
@@ -594,24 +591,18 @@ __PACKAGE__->meta->make_immutable;
 	</section>
 
 	<section>
+      <h2>We happily used it for years</h2>
+      <h3>... and added trivial plugins!</h3>
 	  <img src="img/bender-ass.png" alt="" class="plain">
 	</section>
 
 	<section>
-      <h2>We happily used it for years</h2>
-      <h3>... and added trivial pluggins!</h3>
+      <h1>Evolve or die</h1>
+	    <img src="img/bender-evolution.png" alt="" class="plain">
 	</section>
 
 	<section>
-      <h2>It was time for evolution</h2>
-	</section>
-
-	<section>
-	  <img src="img/bender-evolution.png" alt="" class="plain">
-	</section>
-
-	<section>
-      <h2>We wanted to talk to it on slack</h2>
+      <h1>slack</h1>
 	</section>
 
 	<section>
@@ -709,14 +700,11 @@ sub message {
         $method->($self, $msg, [@toks]);
     }
 }
+	  </code></pre>
+	</section>
 
-# Message address the bot
-sub _is_direct_msg {
-    my $msg = pop;
-    return 1 if ref($msg) =~ /XMPP/;
-    !$msg->channel &amp;&amp; $msg->from;
-}
-
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
 sub _parse_msg {
     my $msg = pop;
     my ( $cmd, @toks ) = grep {$_} split /\s+/, $msg->body;
@@ -730,8 +718,151 @@ sub _parse_msg {
 
     return ( _is_direct_msg($msg), $cmd, @toks );
 }
+
+sub _is_direct_msg {
+    my $msg = pop;
+    return 1 if ref($msg) =~ /XMPP/;
+    !$msg->channel &amp;&amp; $msg->from;
+}
+
 1;
 	  </code></pre>
+	</section>
+
+	<section>
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
+	  <pre><code data-trim data-noescape class="perl">
+sub message {
+    my ( $self, $msg ) = @_;
+
+    if ( $msg->body =~ /
+      ^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$
+    /x ) {
+        my ($app, $branch, $env, $dry) = ($1, $2||'master', $3||'pro', $4);
+
+        return $msg->reply(
+            sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
+        ) if $self->is_running;
+
+        $self->_deploy_app( $msg, $app, $branch, $env, $dry )
+    }
+    elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
+			  # Give some help on this deploy command
+    }
+}
+	  </code></pre>
+	</section>
+	<section data-transition="fade">
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
+	  <pre><code data-trim data-noescape class="perl">
+sub cmd_deploy {
+    my ( $self, $msg, $args ) = @_;
+    return unless @$args;
+
+    my ($app, $branch, $env, $try) = split(/@/, $args[0]), $arg[2]||'pro', $args[3];
+
+    return $msg->reply(
+      sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
+    ) if $self->is_running;
+
+    $self->_deploy_app( $msg, $app, $branch, $env, $dry )
+}
+
+sub cmd_help {
+    # Give some help on this deploy command
+}
+	  </code></pre>
+	</section>
+
+	<section>
+		  <pre style="background:#fff;color:#000;padding:5px">&gt; deploy help</pre>
+	</section>
+
+	<section>
+      <h1>Subcommands</h1>
+	</section>
+
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+sub next_cmd {
+    my ( $self, $msg, $args, $ns ) = @_;
+
+    my $subcmd = shift @$args ||'';
+    $ns ||= 'subcmd';
+
+    if ( my $method = $self->can("${ns}_$subcmd") ) {
+        return $method->($self, $msg, $args);
+    }
+    elsif ( $method = $self->can("${ns}_default") ) {
+        unshift @$args, $subcmd if $subcmd;
+        return $method->($self, $msg, $args);
+    }
+}
+	  </code></pre>
+	</section>
+
+	<section data-transition="fade">
+	  <pre><code data-trim data-noescape class="perl">
+sub cmd_deploy { shift->next_cmd( @_ => 'deploy' ) }
+
+sub deploy_default {
+    my ( $self, $msg, $args ) = @_;
+    return $self->cmd_help($msg) unless @$args;
+
+    my ($app, $branch, $env, $try) = split(/@/, $args[0]), $arg[2]||'pro', $args[3];
+
+    return $msg->reply(
+      sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
+    ) if $self->is_running;
+
+    $self->_deploy_app( $msg, $app, $branch, $env, $dry )
+}
+
+sub cmd_help {
+    my ( $self, $msg, $args ) = @_;
+    $msg->reply('Some help...');
+}
+	  </code></pre>
+	</section>
+
+	<section>
+      <h1>Plugin::Slack</h1>
+      <h2>Announce to slack channels</h2>
+	</section>
+
+	<section>
+	  <pre><code data-trim class="perl">
+        $self->bot->trigger( announce => 'Hello some channel' )
+        $self->bot->trigger( announce => 'Blah!' => '#random' )
+	  </code></pre>
+	</section>
+
+	<section>
+      <h1>Plugin::Resque</h1>
+      <h2>Inspection and management</h2>
+	</section>
+
+	<section>
+      <h1>Plugin::Servers</h1>
+      <h2>Buy and renovation</h2>
+	</section>
+
+	<section>
+      <h1>Role::Config</h1>
+      <h2>Brain :-p</h2>
+	</section>
+
+	<section>
+      <h1>Plugin::Sensu</h1>
+	</section>
+
+	<section>
+      <h1>Improved monitoring</h1>
+      <h2>Plugin::Sensu trigger trick</h2>
+	</section>
+
+	<section>
+      <h1>LoopMessage</h1>
 	</section>
 
 	<section>
@@ -739,12 +870,13 @@ sub _parse_msg {
 	</section>
 
 	<section>
-      <h2>CLI all the things!</h2>
-	  <img src="img/bender-woah.png" alt="" class="plain">
+	    <h1>A CLI to rule them all!</h1>
+      <br><br>
+	    <img src="img/bender-woah.png" alt="" class="plain">
 	</section>
 
 	<section>
-	  <pre><code data-trim data-noescape class="perl">
+	  <pre style="margin-top:-30px;"><code data-trim data-noescape class="perl">
 package Supers::Bot;
 # ABSTRACT: Soysuper jabber bot
 use Moose;
@@ -801,7 +933,7 @@ sub _init_httpd {
 	</section>
 
 	<section>
-	  <pre><code data-trim data-noescape class="perl">
+	  <pre style="margin-top:-30px;"><code data-trim data-noescape class="perl">
 package Supers::Bot::HttpMessage;
 use Moose;
 has httpd   => is => 'ro', required => 1;
@@ -858,10 +990,6 @@ $ sc deploy api + deploy workers - deploy app
 	</section>
 
 	<section data-background="red">
-	  <h1>...</h1>
-	</section>
-
-	<section data-background="red">
 	  <img src="img/bender-applause.png" alt="" class="plain">
 	</section>
 
@@ -874,125 +1002,43 @@ $ sc deploy api + deploy workers - deploy app
 	</section>
 
 	<section>
-      <h1>We need faster deploys</h1>
-      <h2>...and safer deploys</h2>
-	</section>
-
-	<section>
-      <h1>So, we rewrite our Rex code</h1>
-      <h2>ferki++</h2>
-	</section>
-
-	<section>
-		<pre><code>
-$ rex -E pro -b deploy manager@some-branch
-		</code></pre>
-	</section>
-
-	<section>
-      <h2>Plugins needs to handle permanent settings</h2>
-	</section>
-
-	<section>
-      <h2>Supers::Bot::Role::Config</h2>
-	</section>
-
-	<section>
 	  <pre><code data-trim data-noescape class="perl">
-package Supers::Bot::Plugin::Memory;
-use Moose;
-with 'Supers::Bot::Role::CmdPlugin';
-with 'Supers::Bot::Role::Config';
+#!/usr/bin/env perl
 
-sub config_name {'memory'}
+use common::sense;
+use Mojo::UserAgent;
+use Data::Dump qw/pp/;
 
-sub cmd_set {
-    my ( $self, $msg, $args ) = @_;
-    my $key = shift @$args;
-    my $val = join( ' ', @$args );
+my $ua = Mojo::UserAgent->new->inactivity_timeout(360)->request_timeout(360);
 
-    if ( defined $key &amp;&amp; defined $val ) {
-        $self->set_config( $key => $val );
-        $self->send_message( $msg => "Ok!, ");
-    }
-    else {
-        $self->send_message( $msg => "Hm... I need a key and a value to remember!");
-    }
+for my $plan ( get_plan(@ARGV) ) { Mojo::IOLoop->delay(@$plan)->wait }
+
+sub get_plan {
+    my $base = 'http://deploy:6200/';
+
+    map {
+        my @tasks = @$_; [
+
+        sub{
+            my $delay = shift;
+            say '> '. pp(\@tasks);
+            $ua->get($_ => { 'ss-from' => $ENV{USER} } => $delay->begin) for map {$base.$_} @tasks;
+        },
+        sub{
+            my $delay = shift;
+            my $count = 0;
+            say '- '. $tasks[$count++].":\n". $_->res->body for @_;
+            say '< '. pp(\@tasks) . "\n";
+        }
+    ]} map {[ split m|/\+/| ]} split( m|/\-/|, join('/', @_) )
 }
-
-sub cmd_get {
-    my ( $self, $msg, $args ) = @_;
-    my $key = shift @$args || return;
-    if ( my $val = $self->get_config( $key ) ) {
-        $self->send_message( $msg => "> $val");
-    }
-    else {
-        $self->send_message( $msg => "Hm... nothing about `$key`");
-    }
-}
-
-__PACKAGE__->meta->make_immutable;
-	  </code></pre>
-	</section>
-
-	<section>
-      <h2>Notifications are handled by another plugin</h2>
-	</section>
-
-	<section>
-	  <pre><code data-trim class="perl">
-package Supers::Bot::Plugin::Slack;
-use Moose;
-with 'Supers::Bot::Plugin';
-use AnyEvent::HTTP;
-use Scalar::Util qw(weaken);
-use JSON qw(encode_json);
-
-has api_url => (
-    is      => 'ro',
-    default => sub{'https://hooks.slack.com/services/our/own/credentials'}
-);
-
-has nick     => ( is => 'ro', default => sub{ 'Bot' } );
-has channel  => ( is => 'ro', default => sub{ '#general' } );
-has guard    => ( is => 'rw' );
-
-sub ready {
-    my ( $self, $channel ) = @_;
-    $self->notify("Bender is ready at $channel! :nyan::ncat:", 'info')
-}
-	  </code></pre>
-	</section>
-
-	<section>
-	  <pre><code data-trim class="perl">
-sub notify {
-    my ( $self, $msg, $level ) = @_;
-    return unless $msg;
-
-    my $payload = encode_json({ username => $self->nick, channel => $self->channel, text => $msg });
-
-    weaken $self;
-    $self->guard(
-        http_post( $self->api_url, "payload=$payload",
-            headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
-            sub {
-                my ($body, $heads) = @_;
-                $self->bot->trigger( inform_op => 'Slack message failed: $msg' )
-                    unless $heads->{Status} == 200;
-            }
-        )
-    );
-}
-
-__PACKAGE__->meta->make_immutable;
 	  </code></pre>
 	</section>
 
       </div>
     </div>
     <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.min.js"></script>
+    <script src="js/reveal.js"></script>
     <script>
       // Full list of configuration options available here:
       // https://github.com/hakimel/reveal.js#configuration
@@ -1003,7 +1049,7 @@ __PACKAGE__->meta->make_immutable;
         center: true,
 
         theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+        transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
 
         // Parallax scrolling
         // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
