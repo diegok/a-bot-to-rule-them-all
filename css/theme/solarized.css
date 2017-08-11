@@ -152,6 +152,8 @@ body {
 
 .reveal pre {
   width: 100%;
+  box-shadow: none;
+  border:5px solid #fff;
 }
 
 .reveal pre code {
@@ -160,6 +162,10 @@ body {
 
 .reveal mark {
     background-color: #000;
-    border: 1px dashed red;
+    border: 1px dashed yellow;
     color: #eee;
+}
+
+.reveal .slides {
+    width:1024px !important;
 }

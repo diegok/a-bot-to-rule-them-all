@@ -56,7 +56,7 @@
 	</section>
 
 	<section>
-	  <h1>CLI for chat shell</h1>
+	  <h1>CLI for chat</h1>
 	</section>
 
 	<section>
@@ -77,7 +77,7 @@
 	</section>
 
 	<section>
-	  <h1>REST-API Thumbs-App Admin-App MogileFS MySQL Resque Workers MongoDB Redis ElasticSearch ...</h1>
+	  <h1>VMs API Thumbs-App Admin-App NGINX MogileFS MySQL Resque Workers MongoDB Redis ElasticSearch ...</h1>
 	</section>
 
 	<section>
@@ -136,10 +136,6 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
-	  <img src="img/bender.png" alt="" class="plain">
-	</section>
-
-	<section>
       <h1>Always online</h1>
 	</section>
 
@@ -158,6 +154,11 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
+      <h2>gTalk/jabber</h2>
+      <h2>push notifications for free!</h2>
+	</section>
+
+	<section>
       <h1>It would be nice if it can ...</h1>
 	</section>
 
@@ -166,8 +167,7 @@ $ mrsh @wf -- 'source /home/deploy/perl5/perlbrew/etc/bashrc; ubic restart soysu
 	</section>
 
 	<section>
-      <h2>gTalk/jabber</h2>
-      <h2>push notifications for free!</h2>
+	  <img src="img/rainy-days-bcn.jpg" alt="" class="plain">
 	</section>
 
 	<section>
@@ -197,8 +197,13 @@ has is_ready => ( is => 'rw', isa => 'Bool', default => sub{0} );
 
 has plugins  => ( is => 'rw', isa => 'ArrayRef', default => sub{[]} );
 has _plugin  => ( is => 'rw', isa => 'HashRef',  default => sub{{}} );
-has _cv   => ( is => 'ro', default => sub {AnyEvent->condvar} );
-has _xmpp => ( is => 'rw', lazy => 1, <mark>builder => '_build_xmpp'</mark>, clearer => 'reset_connection' );
+has _cv      => ( is => 'ro', default => sub {AnyEvent->condvar} );
+has _xmpp    => (
+    is   => 'rw',
+    lazy => 1,
+    <mark>builder => '_build_xmpp'</mark>,
+    clearer => 'reset_connection'
+);
 	  </code></pre>
 	</section>
 
@@ -272,6 +277,7 @@ sub register_plugin {
 	  <pre><code data-trim class="perl">
 sub trigger {
     my ( $self, $event ) = ( shift, shift );
+
     for my $plugin_name ( @{$self->plugins} ) {
         my $plugin = $self->_plugin->{$plugin_name} || next;
         $plugin->$event(@_) if $plugin->can($event);
@@ -290,10 +296,6 @@ sub _init_events {
         session_ready => sub {
             $self->is_ready(1);
             $self->trigger( 'ready' => 'xmpp' );
-        },
-        roster_update => sub {
-            my ($con, $roster, $contacts) = @_;
-            $self->trigger( 'roster_update' => $roster, $contacts );
         },
         message => sub {
             my ( undef, $msg ) = @_;
@@ -450,9 +452,78 @@ sub message {
 }
 	  </code></pre>
 	</section>
+	<section>
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
+	  <pre><code data-trim data-noescape class="perl">
+sub message {
+    my ( $self, $msg ) = @_;
+
+    if ( $msg->body =~ /
+      <mark>^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$</mark>
+    /x ) {
+        my ($app, $branch, $env, $dry) = ($1, $2||'master', $3||'pro', $4);
+
+        return $msg->reply(
+            sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
+        ) if $self->is_running;
+
+        $self->_deploy_app( $msg, $app, $branch, $env, $dry )
+    }
+    elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
+			  # Give some help on this deploy command
+    }
+}
+	  </code></pre>
+	</section>
+	<section>
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
+	  <pre><code data-trim data-noescape class="perl">
+sub message {
+    my ( $self, $msg ) = @_;
+
+    if ( $msg->body =~ /
+      ^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$
+    /x ) {
+        <mark>my ($app, $branch, $env, $dry) = ($1, $2||'master', $3||'pro', $4);</mark>
+
+        return $msg->reply(
+            sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
+        ) if $self->is_running;
+
+        $self->_deploy_app( $msg, $app, $branch, $env, $dry )
+    }
+    elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
+			  # Give some help on this deploy command
+    }
+}
+	  </code></pre>
+	</section>
+	<section>
+		<pre style="background:#fff;color:#000;padding:5px">&gt; deploy app@some-branch to some-env</pre>
+	  <pre><code data-trim data-noescape class="perl">
+sub message {
+    my ( $self, $msg ) = @_;
+
+    if ( $msg->body =~ /
+      ^deploy \s+ (\w+) (?:\@([^\s\?]+))? (?:\s+to\s+([^\s\?]+))? (\s*\?)?$
+    /x ) {
+        my ($app, $branch, $env, $dry) = ($1, $2||'master', $3||'pro', $4);
+
+        return $msg->reply(
+            sprintf( 'Still running `%s` for :%s:', $self->last_msg->body, $self->last_msg->from )
+        ) if $self->is_running;
+
+        <mark>$self->_deploy_app( $msg, $app, $branch, $env, $dry );</mark>
+    }
+    elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
+			  # Give some help on this deploy command
+    }
+}
+	  </code></pre>
+	</section>
 
 	<section>
-	  <pre><code data-trim class="perl">
+	  <pre><code data-trim data-noescape class="perl">
 sub _deploy_app {
     my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
 
@@ -468,6 +539,72 @@ sub _deploy_app {
     $self->run_command($cmd => sub{
         my ( $self, $out, $err, $exit ) = @_;
         $msg->reply( "Done deploying `$app` on `$env_alias` environment!" );
+        $self->task_done;
+    });
+}
+	  </code></pre>
+	</section>
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+sub _deploy_app {
+    my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
+
+    # Whatever we need to build the shell commands to run...
+    <mark>my $cmd = _build_cmd( $conf, $env, $branch );</mark>
+           || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
+
+    return $msg->reply( "This would run:\n$cmd" ) if $dry;
+
+    $msg->reply("Deploying branch `$branch` for application `$app` on `$env_alias` environment.");
+    $self->last_msg($msg); $self->task_running(1);
+
+    $self->run_command($cmd => sub{
+        my ( $self, $out, $err, $exit ) = @_;
+        $msg->reply( "Done deploying `$app` on `$env_alias` environment!" );
+        $self->task_done;
+    });
+}
+	  </code></pre>
+	</section>
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+sub _deploy_app {
+    my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
+
+    # Whatever we need to build the shell commands to run...
+    my $cmd = _build_cmd( $conf, $env, $branch );
+           || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
+
+    return $msg->reply( "This would run:\n$cmd" ) if $dry;
+
+    $msg->reply("Deploying branch `$branch` for application `$app` on `$env_alias` environment.");
+    $self->last_msg($msg); $self->task_running(1);
+
+    <mark>$self->run_command($cmd => sub{</mark>
+        my ( $self, $out, $err, $exit ) = @_;
+        $msg->reply( "Done deploying `$app` on `$env_alias` environment!" );
+        $self->task_done;
+    });
+}
+	  </code></pre>
+	</section>
+	<section>
+	  <pre><code data-trim data-noescape class="perl">
+sub _deploy_app {
+    my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
+
+    # Whatever we need to build the shell commands to run...
+    my $cmd = _build_cmd( $conf, $env, $branch );
+           || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
+
+    return $msg->reply( "This would run:\n$cmd" ) if $dry;
+
+    $msg->reply("Deploying branch `$branch` for application `$app` on `$env_alias` environment.");
+    $self->last_msg($msg); $self->task_running(1);
+
+    $self->run_command($cmd => sub{
+        my ( $self, $out, $err, $exit ) = @_;
+        <mark>$msg->reply( "Done deploying `$app` on `$env_alias` environment!" );</mark>
         $self->task_done;
     });
 }
@@ -563,7 +700,7 @@ sub inform_op {
 sub tick {
     my $self = shift;
     my $now = time;
-    return unless $now - $self->last > 20;
+    return unless $now - $self->last_time > 20;
     $self->last_time($now);
 
     if ( my $url = shift @{$self->urls} ) {
@@ -642,8 +779,9 @@ sub _init_slack {
     my $self = shift;
     $self->_slack->on( hello   => sub { $self->trigger( 'ready' => 'slack' ) } );
     $self->_slack->on( message => sub {
-        <mark>$self->trigger( 'message' => Supers::Bot::SlackMessage->new( slack => $_[0], event => $_[1] ) )</mark>
-            unless $_[1]->{subtype}; # skip announcements ATM
+        $self->trigger(
+            <mark>message => Supers::Bot::SlackMessage->new(slack => $_[0], event => $_[1])</mark>
+        ) unless $_[1]->{subtype}; # skip announcements ATM
     });
 }
 	  </code></pre>
@@ -694,7 +832,7 @@ with 'Supers::Bot::Plugin';
 
 sub message {
     my ( $self, $msg ) = @_;
-    my ( $to_me, $cmd, @toks ) = _parse_msg($msg);
+    <mark>my ( $to_me, $cmd, @toks ) = _parse_msg($msg);</mark>
     return unless $to_me;
     if ( my $method = $self->can("cmd_$cmd") ) {
         $method->($self, $msg, [@toks]);
@@ -832,8 +970,8 @@ sub cmd_help {
 
 	<section>
 	  <pre><code data-trim class="perl">
-        $self->bot->trigger( announce => 'Hello some channel' )
-        $self->bot->trigger( announce => 'Blah!' => '#random' )
+$self->bot->trigger( announce => 'Hello some channel' )
+$self->bot->trigger( announce => 'Blah!' => '#random' )
 	  </code></pre>
 	</section>
 
@@ -1049,7 +1187,7 @@ sub get_plan {
         center: true,
 
         theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-        transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+        transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
 
         // Parallax scrolling
         // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
