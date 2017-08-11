@@ -32,8 +32,9 @@
       <div class="slides">
 	<section>
 	  <h1>A bot to rule them all!</h1>
-	  <br><br>
+	  <br><br><br><br><br>
 	  <h3>Diego Kuperman | @freekey</h3>
+    <a href="https://diegok.github.io/a-bot-to-rule-them-all/">https://diegok.github.io/a-bot-to-rule-them-all/</a>
 	</section>
 
 	<section>
@@ -41,10 +42,10 @@
 	</section>
 
 	<section>
-	  <h1>I ❤ perl!</h1>
+	  <h1>I ❤️ perl!</h1>
 	</section>
 	<section>
-	  <h1>I ❤ perl comunity!</h1>
+	  <h1>I ❤️ perl comunity!</h1>
 	  <h3>(you)</h3>
 	</section>
 	<section>
@@ -108,6 +109,14 @@
 $ cd /var/supers-puppet/rex/supers_deploy
 $ rex -E production -b supers_checkout master
 $ rex -E production -G web -b supers_install master
+      </code></pre>
+	</section>
+	<section>
+      <h2>Deploy one app on some ENV</h2>
+      <pre><code data-noescape>
+$ cd /var/supers-puppet/rex/supers_deploy
+$ rex -E <mark>production</mark> -b <mark>supers_checkout</mark> <mark>master</mark>
+$ rex -E <mark>production</mark> -G <mark>web</mark> -b <mark>supers_install</mark> <mark>master</mark>
       </code></pre>
 	</section>
 	<section>
