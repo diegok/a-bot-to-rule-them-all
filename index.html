@@ -64,7 +64,7 @@
 	</section>
 
 	<section>
-	  <h1>5y ago we started a company</h1>
+	  <h1>+5y ago we started a company</h1>
 	</section>
 	<section>
 	  <img src="img/soysuper_logo.png" alt="" class="plain">
@@ -281,6 +281,19 @@ sub trigger {
     for my $plugin_name ( @{$self->plugins} ) {
         my $plugin = $self->_plugin->{$plugin_name} || next;
         $plugin->$event(@_) if $plugin->can($event);
+    }
+}
+	  </code></pre>
+	</section>
+	<section>
+	  <h3>Plugins event dispatcher</h3>
+	  <pre><code data-trim data-noescape class="perl">
+sub trigger {
+    my ( $self, $event ) = ( shift, shift );
+
+    for my $plugin_name ( @{$self->plugins} ) {
+        my $plugin = $self->_plugin->{$plugin_name} || next;
+        <mark>$plugin->$event(@_) if $plugin->can($event);</mark>
     }
 }
 	  </code></pre>
@@ -528,7 +541,7 @@ sub _deploy_app {
     my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
 
     # Whatever we need to build the shell commands to run...
-    my $cmd = _build_cmd( $conf, $env, $branch );
+    my $cmd = _build_cmd( $app, $env, $branch );
            || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
 
     return $msg->reply( "This would run:\n$cmd" ) if $dry;
@@ -550,7 +563,7 @@ sub _deploy_app {
     my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
 
     # Whatever we need to build the shell commands to run...
-    <mark>my $cmd = _build_cmd( $conf, $env, $branch );</mark>
+    <mark>my $cmd = _build_cmd( $app, $env, $branch );</mark>
            || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
 
     return $msg->reply( "This would run:\n$cmd" ) if $dry;
@@ -572,7 +585,7 @@ sub _deploy_app {
     my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
 
     # Whatever we need to build the shell commands to run...
-    my $cmd = _build_cmd( $conf, $env, $branch );
+    my $cmd = _build_cmd( $app, $env, $branch );
            || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
 
     return $msg->reply( "This would run:\n$cmd" ) if $dry;
@@ -594,7 +607,7 @@ sub _deploy_app {
     my ( $self, $msg, $app, $branch, $env_alias, $dry ) = @_;
 
     # Whatever we need to build the shell commands to run...
-    my $cmd = _build_cmd( $conf, $env, $branch );
+    my $cmd = _build_cmd( $app, $env, $branch );
            || return $msg->reply("Unknown application `$app` or environment `$env_alias`");
 
     return $msg->reply( "This would run:\n$cmd" ) if $dry;
@@ -845,7 +858,7 @@ sub message {
 	  <pre><code data-trim data-noescape class="perl">
 sub _parse_msg {
     my $msg = pop;
-    my ( $cmd, @toks ) = grep {$_} split /\s+/, $msg->body;
+    my ( $cmd, @toks ) = grep {defined} split /\s+/, $msg->body;
 
     if ( $cmd =~ /^(bot|bender|<\@([^>]+)>):?$/i ) {
         my $name = $2 ? $msg->slack->find_user_name($2) : $1;
@@ -885,7 +898,7 @@ sub message {
         $self->_deploy_app( $msg, $app, $branch, $env, $dry )
     }
     elsif ( $msg->body =~ /^ \s* (?:deploy \s* (?:\?|help) | help ) \s* $/ix ) {
-			  # Give some help on this deploy command
+        # Give some help on this deploy command
     }
 }
 	  </code></pre>
